@@ -17,6 +17,7 @@
   <h1>My Habits</h1>
   <input id="habit-input" placeholder="e.g. Drink water">
   <button id="add-btn">Add</button>
+  <button id="clear-btn">Clear all habits</button>
   <ul id="habit-list"></ul>
 
   <script>
@@ -70,7 +71,14 @@
       render();
     }
 
+    function clearHabits() {
+      if (!confirm("Delete all habits? This cannot be undone.")) return;
+      saveHabits([]);
+      render();
+    }
+
     document.getElementById("add-btn").addEventListener("click", addHabit);
+    document.getElementById("clear-btn").addEventListener("click", clearHabits);
     document.getElementById("habit-input").addEventListener("keydown", (e) => {
       if (e.key === "Enter") addHabit();
     });
