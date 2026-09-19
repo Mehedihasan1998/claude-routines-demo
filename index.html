@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Habit Tracker</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 420px; margin: 60px auto; padding: 0 16px; }
+  h1 { font-size: 1.4rem; }
+  #habit-input { width: 70%; padding: 8px; font-size: 1rem; }
+  #add-btn { padding: 8px 12px; font-size: 1rem; }
+  ul { list-style: none; padding: 0; }
+  li { display: flex; align-items: center; gap: 8px; padding: 8px 0; border-bottom: 1px solid #eee; }
+  li.done span { text-decoration: line-through; color: #999; }
+</style>
+</head>
+<body>
+  <h1>My Habits</h1>
+  <input id="habit-input" placeholder="e.g. Drink water">
+  <button id="add-btn">Add</button>
+  <ul id="habit-list"></ul>
+
+  <script>
+    const STORAGE_KEY = "habits";
+
+    function loadHabits() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }
+
+    function saveHabits(habits) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(habits));
+    }
+
+    function render() {
+      const list = document.getElementById("habit-list");
+      list.innerHTML = "";
+      loadHabits().forEach((habit, index) => {
+        const li = document.createElement("li");
+        if (habit.done) li.classList.add("done");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = habit.done;
+        checkbox.addEventListener("change", () => toggleHabit(index));
+
+        const span = document.createElement("span");
+        span.textContent = habit.name;
+
+        li.appendChild(checkbox);
+        li.appendChild(span);
+        list.appendChild(li);
+      });
+    }
+
+    function addHabit() {
+      const input = document.getElementById("habit-input");
+      const name = input.value.trim();
+      if (!name) return;
+      const habits = loadHabits();
+      habits.push({ name, done: false });
+      saveHabits(habits);
+      input.value = "";
+      render();
+    }
+
+    function toggleHabit(index) {
+      const habits = loadHabits();
+      habits[index].done = !habits[index].done;
+      saveHabits(habits);
+      render();
+    }
+
+    document.getElementById("add-btn").addEventListener("click", addHabit);
+    document.getElementById("habit-input").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") addHabit();
+    });
+
+    render();
+  </script>
+</body>
+</html>
