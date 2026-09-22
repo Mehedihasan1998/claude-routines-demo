@@ -6,7 +6,7 @@ other line and every other file untouched.
 
 - [x] Add a "Clear all habits" button, with a confirm step before it deletes anything (2026-09-19)
 - [x] Show today's date at the top of the page (2026-09-19)
-- [ ] Add a small counter that shows how many habits are checked off today
+- [x] Add a small counter that shows how many habits are checked off today (2026-09-22)
 - [ ] Add a light / dark toggle that remembers the last choice
 - [ ] Add a short empty-state message when there are no habits yet
 - [ ] Add a simple streak count next to each habit
