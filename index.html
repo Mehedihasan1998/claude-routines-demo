@@ -7,6 +7,7 @@
   body { font-family: system-ui, sans-serif; max-width: 420px; margin: 60px auto; padding: 0 16px; }
   h1 { font-size: 1.4rem; }
   #today-date { color: #666; margin-top: -8px; }
+  #done-counter { color: #666; font-size: 0.9rem; }
   #habit-input { width: 70%; padding: 8px; font-size: 1rem; }
   #add-btn { padding: 8px 12px; font-size: 1rem; }
   ul { list-style: none; padding: 0; }
@@ -17,6 +18,7 @@
 <body>
   <h1>My Habits</h1>
   <p id="today-date"></p>
+  <p id="done-counter"></p>
   <input id="habit-input" placeholder="e.g. Drink water">
   <button id="add-btn">Add</button>
   <button id="clear-btn">Clear all habits</button>
@@ -37,7 +39,11 @@
     function render() {
       const list = document.getElementById("habit-list");
       list.innerHTML = "";
-      loadHabits().forEach((habit, index) => {
+      const habits = loadHabits();
+      const doneCount = habits.filter(habit => habit.done).length;
+      document.getElementById("done-counter").textContent =
+        `${doneCount} of ${habits.length} checked off today`;
+      habits.forEach((habit, index) => {
         const li = document.createElement("li");
         if (habit.done) li.classList.add("done");
 
