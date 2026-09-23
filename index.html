@@ -20,6 +20,7 @@
   <input id="habit-input" placeholder="e.g. Drink water">
   <button id="add-btn">Add</button>
   <button id="clear-btn">Clear all habits</button>
+  <p id="habit-counter"></p>
   <ul id="habit-list"></ul>
 
   <script>
@@ -37,7 +38,8 @@
     function render() {
       const list = document.getElementById("habit-list");
       list.innerHTML = "";
-      loadHabits().forEach((habit, index) => {
+      const habits = loadHabits();
+      habits.forEach((habit, index) => {
         const li = document.createElement("li");
         if (habit.done) li.classList.add("done");
 
@@ -53,6 +55,10 @@
         li.appendChild(span);
         list.appendChild(li);
       });
+
+      const doneCount = habits.filter((habit) => habit.done).length;
+      document.getElementById("habit-counter").textContent =
+        `${doneCount} of ${habits.length} checked off today`;
     }
 
     function addHabit() {
