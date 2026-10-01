@@ -17,6 +17,7 @@
 <body>
   <h1>My Habits</h1>
   <p id="today-date"></p>
+  <p id="done-count"></p>
   <input id="habit-input" placeholder="e.g. Drink water">
   <button id="add-btn">Add</button>
   <button id="clear-btn">Clear all habits</button>
@@ -37,7 +38,10 @@
     function render() {
       const list = document.getElementById("habit-list");
       list.innerHTML = "";
-      loadHabits().forEach((habit, index) => {
+      const habits = loadHabits();
+      document.getElementById("done-count").textContent =
+        habits.filter((h) => h.done).length + " of " + habits.length + " habits done today";
+      habits.forEach((habit, index) => {
         const li = document.createElement("li");
         if (habit.done) li.classList.add("done");
 
