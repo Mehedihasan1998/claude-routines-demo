@@ -17,6 +17,7 @@
 <body>
   <h1>My Habits</h1>
   <p id="today-date"></p>
+  <p id="done-count"></p>
   <input id="habit-input" placeholder="e.g. Drink water">
   <button id="add-btn">Add</button>
   <button id="clear-btn">Clear all habits</button>
@@ -53,6 +54,9 @@
         li.appendChild(span);
         list.appendChild(li);
       });
+      const habits = loadHabits();
+      const doneCount = habits.filter((habit) => habit.done).length;
+      document.getElementById("done-count").textContent = doneCount + " of " + habits.length + " habits done today";
     }
 
     function addHabit() {
